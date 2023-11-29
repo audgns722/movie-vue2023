@@ -1,20 +1,5 @@
 <template>
-    <header id="header" role="banner">
-        <div class="header__inner">
-            <div class="header__nav">
-                <h1>MOVIEKING<br /><em>CINEMA</em></h1>
-                <nav>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Schedule</a></li>
-                        <li><a href="#">Movies</a></li>
-                        <li><a href="#">News</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
+    <HeaderSection />
     <section>
         <div class="detail__intro">
             <div class="container">
@@ -29,151 +14,87 @@
                     <p>설명 : {{ movieInfo.overview }}</p>
                     <p>개봉일 : {{ movieInfo.release_date }}</p>
                     <p class="rating">평점 : <em>{{ movieInfo.vote_average }}</em></p>
-                    <div class="credits">
-                        <p>출연진</p>
-                        <div>
-                            <img src="https://image.tmdb.org/t/p/w500/oe0ydnDvQJCTbAb2r5E1asVXoCP.jpg" alt="actorimg">
-                            <p class="actor">Joaquin Phoenix</p>
+                    <div class="genres">
+                        <p v-for="genre in movieInfo.genres" :key="genre.id">
+                            {{ genre.name }}
+                        </p>
+                        <p class="runtime">{{ movieInfo.runtime }} 분</p>
+                    </div>
+                    <div class="credits scroll">
+                        <div v-if="movieInfo.credits" v-for="(crewMember, index) in movieInfo.credits.crew.slice(0, 10)"
+                            :key="index">
+                            <img v-if="crewMember.profile_path"
+                                :src="'https://image.tmdb.org/t/p/w500/' + crewMember.profile_path" alt="actorimg">
+                            <img v-else src="../assets/img/noimage.png" alt="이미지 없음">
+                            <p class="actor">{{ crewMember.name }}</p>
                         </div>
                     </div>
-                    <div class="review">
-                        <p>작성자</p>
-                        <h2 class="content"></h2>
-                    </div>
                 </div>
-                <div class="similar">
+            </div>
+            <!-- <div class="bottom">
+                <div class="review scroll">
+                    <p>댓글</p>
+                    <h2 class="content"></h2>
+                </div>
+                <div class="similar scroll">
                     <p>비슷한 영화</p>
                     <div>
                         <img src="/" alt="">
-                        <p class="title">제목</p>
+                        <p class="title"></p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
-
-    <footer id="footer" role="contentinfo">
-        <div class="container">
-            <div class="footer__top">
-                <div class="footer__title">MOVIEKING<br /><em>CINEMA</em></div>
-                <nav class="footer__nav">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Schedule</a></li>
-                        <li><a href="#">Movies</a></li>
-                        <li><a href="#">News</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="footer__bottom">
-                <div class="footer__email">
-                    audgns722@gmail.com
-                </div>
-                <div class="footer__copy">
-                    <p>&copy; 2023 M.Huns. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <FooterSection />
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import HeaderSection from "../components/section/HeaderSection.vue";
+import FooterSection from "../components/section/FooterSection.vue";
 
 export default {
     setup() {
-        const movieInfo = ref({});
         const route = useRoute();
+        const movieInfo = ref({});;
+        const apiKey = import.meta.env.VITE_API_KEY;
 
-        const movieInfoFetch = (movieId) => {
-            const apiKey = import.meta.env.VITE_API_KEY;
-            const language = 'ko-KR'
-            fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=${language}&api_key=${apiKey}`)
+        const movieInfoFetch = async (movieId) => {
+            try {
+                const movieInfoResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=ko-KR`);
+                const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
 
-                .then((response) => response.json())
-                .then((res) => {
-                    console.log(res);
-                    movieInfo.value = res;
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+                const [movieInfoResult, creditsResult] = await Promise.all([movieInfoResponse.json(), creditsResponse.json()]);
+                movieInfo.value = { ...movieInfoResult, credits: creditsResult };
+            } catch (err) {
+                console.error(err);
+            }
         };
+
+
+
         onMounted(() => {
             const movieId = route.params.movieId;
             movieInfoFetch(movieId);
         });
-        return {
-            movieInfo,
-        };
-    }
+
+        return { movieInfo };
+    },
+    components: { FooterSection, HeaderSection }
 }
 
 
 </script>
 
 <style lang="scss">
-.header__inner {
-    .header__nav {
-        margin: 0 30px;
-        height: 100px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        h1 {
-            text-align: center;
-            font-family: var(--Title-font);
-            line-height: 0.6;
-            font-size: 3rem;
-
-            em {
-                font-size: 2.5rem;
-                color: rgb(201, 32, 32);
-                letter-spacing: 5px;
-            }
-        }
-
-        nav {
-            li {
-                display: inline;
-
-                a {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    transition: all 0.3s;
-
-                    &:hover {
-                        background-color: var(--black100);
-                        color: antiquewhite;
-                        border-radius: 5px;
-                    }
-                }
-            }
-        }
-    }
-
-}
-
 .detail__intro {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
     padding: 30px;
-
-    &::before {
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-color: #00000032;
-        backdrop-filter: blur(7px);
-        z-index: 1;
-    }
 
     .container {
         display: flex;
@@ -182,6 +103,8 @@ export default {
         z-index: 10;
 
         .left {
+            display: flex;
+            align-items: center;
             width: 350px;
 
             img {
@@ -223,6 +146,20 @@ export default {
                 }
             }
 
+            .genres {
+
+                p {
+                    margin-right: 5px;
+                    display: inline-block;
+                    padding-right: 5px;
+                }
+
+                .runtime {
+                    padding-left: 10px;
+                    border-left: 2px solid #fff;
+                }
+            }
+
             .desc {
                 margin-bottom: 10px;
             }
@@ -230,7 +167,8 @@ export default {
             .credits {
                 display: flex;
                 width: 100%;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                overflow-x: scroll;
 
                 div {
                     display: flex;
@@ -250,6 +188,7 @@ export default {
                 }
 
                 img {
+                    border: 1px solid #ccc;
                     width: 100px;
                     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
                 }
@@ -257,5 +196,26 @@ export default {
         }
     }
 
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+
+
+        .review {
+            width: 48%;
+            max-height: 500px;
+            overflow-y: scroll;
+            background-color: #18181863;
+            padding: 10px 15px;
+
+        }
+
+        .similar {
+            width: 48%;
+            overflow-x: scroll;
+            background-color: #18181863;
+            padding: 10px 15px;
+        }
+    }
 }
 </style>
