@@ -47,6 +47,7 @@ Done. Now run:
 - v-bind(또는 :) : 요소의 속성에 JavaScript 표현식을 바인딩하는 데 사용
 - components 분리(HomeView) 각섹션별 불러(header. main. footer)
 - postman 으로 데이터 확인후 header slider부분 이미지 영화정보 불러오기
+- const apikey = import.meta.env.VITE_API_KEY; env환경변수 설정
 
 
 ## 트러블 슈팅
