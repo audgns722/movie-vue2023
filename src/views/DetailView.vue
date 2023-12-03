@@ -2,9 +2,10 @@
     <HeaderSection />
     <main>
         <DetailIntro v-if="movieBasic && movieCredits" :movieBasic="movieBasic" :movieCredits="movieCredits" />
+        <DetailSimilar v-if="movieSimilar" :movieSimilar="movieSimilar"/>
+
+        <!-- <DetailReview v-if="movieReview" :movieReview="movieReview" /> -->
         <!-- <DetailCredits v-if="movieCredits" :movieCredits="movieBasic" /> -->
-        <!-- <DetailInfo v-if="movieInfo" :movieInfo="movieInfo" />
-        <DetailReview v-if="movieReview" :movieReview="movieReview" /> -->0
     </main>
     <FooterSection />
 </template>
@@ -13,26 +14,27 @@
 import HeaderSection from "@/components/section/HeaderSection.vue";
 import FooterSection from "@/components/section/FooterSection.vue";
 import DetailIntro from "@/components/details/DetailIntro.vue";
-// import DetailCredits from "@/components/details/DetailCredits.vue";
-// import DetailInfo from "../components/detail/DetailInfo.vue";
+import DetailSimilar from "@/components/details/DetailSimilar.vue";
+
 // import DetailReview from "../components/detail/DetailReview.vue";
+// import DetailCredits from "@/components/details/DetailCredits.vue";
 
 
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import axios from 'axios';
+import axios from 'axios';;
 
 
 // DetailInfo, DetailReview, 
 export default {
     name: "MovieDetailPage",
 
-    components: { HeaderSection, FooterSection, DetailIntro },
+    components: { HeaderSection, DetailIntro, DetailSimilar, FooterSection,},
 
     setup() {
         const movieBasic = ref(null);
         const movieCredits = ref(null);
-        // const movieSimilar = ref(null);
+        const movieSimilar = ref(null);
         // const movieReview = ref(null);
 
 
@@ -51,9 +53,9 @@ export default {
                 movieCredits.value = resMovieCredits.data;
                 console.log(resMovieCredits)
 
-                // const resMovieSimilar = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/similar?language=${language}&page=1&api_key=${apikey}`);
-                // movieSimilar.value = resMovieSimilar.data;
-                // console.log(resMovieSimilar)
+                const resMovieSimilar = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/similar?language=${language}&page=1&api_key=${apikey}`);
+                movieSimilar.value = resMovieSimilar.data.results;
+                console.log(resMovieSimilar)
 
                 // const resMovieReview = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1&api_key=${apikey}`);
                 // movieReview.value = resMovieReview.data;
@@ -65,7 +67,7 @@ export default {
                 console.log(err)
             }
         });
-        return { movieBasic, movieCredits }
+        return { movieBasic, movieCredits, movieSimilar }
     }
 
 }

@@ -4,12 +4,13 @@ import axios from 'axios';
 
 const movies = ref([]);
 const searchQuery = ref('');
+const apikey = import.meta.env.VITE_API_KEY;
 
 const searchMovies = async () => {
   try {
     const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
       params: {
-        api_key: '32ba541f2b53cf63dc83a7c31682ce72',
+        api_key: apikey,
         language: 'ko-KR',
         query: searchQuery.value,
       }
@@ -39,7 +40,7 @@ const fetchMovies = async (category) => {
   try {
     const response = await axios.get(url, {
       params: {
-        api_key: '32ba541f2b53cf63dc83a7c31682ce72',
+        api_key: apikey,
         language: 'ko-KR',
         page: "1"
       }
