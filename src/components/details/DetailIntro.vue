@@ -20,9 +20,10 @@
                 </div>
                 <div class="detail__credits">
                     <div class="credits scroll">
-                        <div v-for="(crew, index) in movieCredits.crew.slice(0, 10)" :key="index">
+                        <div v-for="(crew, index) in movieCredits.crew" :key="index">
                             <!-- profile_path가 존재하는지 확인 -->
-                            <img v-if="crew.profile_path" :src="'https://image.tmdb.org/t/p/w500' + crew.profile_path" :alt="crew.name">
+                            <img v-if="crew.profile_path" :src="'https://image.tmdb.org/t/p/w500' + crew.profile_path"
+                                :alt="crew.name">
                             <!-- profile_path가 없는 경우 대체 이미지를 표시 -->
                             <img v-else src="../../assets/img/noimage.png" alt="이미지 없음">
                             <p class="actor">{{ crew.name }}</p> <!-- 수정: movieCredits.name 대신 crew.name 사용 -->

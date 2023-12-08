@@ -2,13 +2,16 @@
     <header id="header" role="banner">
         <div class="header__inner">
             <div class="header__nav">
-                <h1>MOVIEKING<br /><em>CINEMA</em></h1>
+                <a href="/">
+                    <h1>MOVIEKING<br /><em>CINEMA</em></h1>
+                </a>
+
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Schedule</a></li>
-                        <li><a href="#">Movies</a></li>
-                        <li><a href="#">News</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">Schedule</a></li>
+                        <li><a href="/">Movies</a></li>
+                        <li><a href="/">News</a></li>
                     </ul>
                 </nav>
             </div>

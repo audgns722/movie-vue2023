@@ -5,6 +5,7 @@ import axios from 'axios';
 const movies = ref([]);
 const searchQuery = ref('');
 const apikey = import.meta.env.VITE_API_KEY;
+const currentTag = ref('latest'); // 새로운 변수 추가
 
 const searchMovies = async () => {
   try {
@@ -47,6 +48,7 @@ const fetchMovies = async (category) => {
     });
     console.log(response.data.results);
     movies.value = response.data.results;
+    currentTag.value = category;
   } catch (err) {
     console.log(err)
   }
@@ -121,10 +123,10 @@ onMounted(async () => {
 
         <div class="movie__tag">
           <ul>
-            <li><a href="#" @click="fetchMovies('latest')">최신영화</a></li>
-            <li><a href="#" @click="fetchMovies('popular')">인기영화</a></li>
-            <li><a href="#" @click="fetchMovies('toprated')">개봉예정</a></li>
-            <li><a href="#" @click="fetchMovies('upcoming')">최고평점</a></li>
+            <li><a href="#" @click="fetchMovies('latest')" :class="{ active: currentTag === 'latest' }">최신영화</a></li>
+            <li><a href="#" @click="fetchMovies('popular')" :class="{ active: currentTag === 'popular' }">인기영화</a></li>
+            <li><a href="#" @click="fetchMovies('toprated')" :class="{ active: currentTag === 'toprated' }">개봉예정</a></li>
+            <li><a href="#" @click="fetchMovies('upcoming')" :class="{ active: currentTag === 'upcoming' }">최고평점</a></li>
           </ul>
         </div>
         <!-- movie__tag -->
