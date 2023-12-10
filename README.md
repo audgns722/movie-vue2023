@@ -1,10 +1,5 @@
 # Vuejs를 이용한 영화사이트 만들기
-[사이트 보러가기]()
-<div>
-  <a href="[https://your-external-link.com](https://vue-movieking-site-project2023.netlify.app/)" target="_blank">사이트 이동</a>
-</div>
-
-<a href="[https://your-external-link.com](https://vue-movieking-site-project2023.netlify.app/)](https://vue-movieking-site-project2023.netlify.app/)" target="_blank" rel="noopener noreferrer">사이트 이동</a>
+<a href="https://vue-movieking-site-project2023.netlify.app/">사이트 이동</a>
 ## 프로젝트 소개
 
 MovieKing은 Vue.js의 다양한 기능을 활용하여 영화 정보를 편리하게 찾고 공유할 수 있는 플랫폼을 제공합니다.
