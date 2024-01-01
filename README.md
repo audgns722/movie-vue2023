@@ -10,6 +10,14 @@ MovieKing은 Vue.js의 다양한 기능을 활용하여 영화 정보를 편리�
   - 영화 목록을 클릭하면 해당 영화의 상세 정보를 볼 수 있습니다. 상세 정보에는 영화의 장르, 러닝타임, 출연진 등의 정보가 포함됩니다. 또한, 영화의 썸네일을 클릭하면 예고편을 볼 수 있는 링크도 제공됩니다.
 - 영화 검색 기능
   - 영화 검색창에 영화 제목을 검색하면 관련된 결과가 출력됩니다.
+  - 
+ ## 완성작 보기
+
+미리보기 :
+
+<div align=center>
+<img width=100% src="https://github.com/audgns722/vue-movie-porject2023/blob/main/vue-movieking-site-project2023.netlify.app_.png">
+</div>
 
 ## 프로젝트 목표
 
