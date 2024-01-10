@@ -166,7 +166,7 @@ Done. Now run:
    - v-bind(또는 :)
      - 요소의 속성에 JavaScript 표현식을 바인딩하는 데 사용
 
-## 코드 미리보가
+## 코드 미리보기
 
 👉 Async/Await를 사용한 API 요청
 
