@@ -1,6 +1,6 @@
 # Vuejs를 이용한 영화사이트 만들기
 
-<a href="https://vue-movieking-site-project2023.netlify.app/" target="_blank">사이트 이동</a> 컨트롤 클릭해주세요
+<a href="https://moviekingcinema.netlify.app/" target="_blank">사이트 이동</a> 컨트롤 클릭해주세요
 
 ## 프로젝트 소개
 
